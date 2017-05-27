@@ -1,12 +1,12 @@
 {
   "name": "force-scripts",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "取force.config.js，若为数组则生成中间件、目标文件和manifest.json。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "MarzK",
   "license": "ISC",
   "dependencies": {
     "case-sensitive-paths-webpack-plugin": "^2.0.0",
@@ -20,5 +20,14 @@
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-md5-hash": "0.0.5",
     "webpack-merge": "^4.1.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marzk/force-scripts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marzk/force-scripts/issues"
+  },
+  "homepage": "https://github.com/marzk/force-scripts#readme"
 }
