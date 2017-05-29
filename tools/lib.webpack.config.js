@@ -2,6 +2,8 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const progressHandler = require('./progress-handler');
+const forceConfig = require('../load-config')();
 
 const ROOT = process.cwd();
 
@@ -21,6 +23,7 @@ const baseConfig = {
     ],
   },
   plugins: [
+    new webpack.ProgressPlugin(progressHandler),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
   ],
@@ -68,29 +71,27 @@ const prodConfig = {
   ],
 };
 
-module.exports = forceConfig => {
-  const {
-    configs,
+const {
+  configs,
+  publicPath,
+} = forceConfig;
+
+const entry = configs.reduce((acc, config, index) => {
+  if (config.libEntry) {
+    acc[`commonLib${index}`] = [path.resolve(config.src, config.libEntry)];
+  }
+
+  return acc;
+}, {});
+
+const relyConfig = {
+  entry,
+  output: {
     publicPath,
-  } = forceConfig;
-
-  const entry = configs.reduce((acc, config, index) => {
-    if (config.libEntry) {
-      acc[`commonLib${index}`] = [path.resolve(config.src, config.libEntry)];
-    }
-
-    return acc;
-  }, {});
-
-  const relyConfig = {
-    entry,
-    output: {
-      publicPath,
-    },
-  };
-
-  return [
-    merge(baseConfig, devConfig, relyConfig),
-    merge(baseConfig, prodConfig, relyConfig),
-  ];
+  },
 };
+
+module.exports = [
+  merge(baseConfig, devConfig, relyConfig),
+  merge(baseConfig, prodConfig, relyConfig),
+];
