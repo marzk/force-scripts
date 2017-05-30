@@ -1,10 +1,11 @@
 {
   "name": "force-scripts",
   "version": "0.0.1",
-  "description": "取force.config.js，若为数组则生成中间件、目标文件和manifest.json。",
+  "description": "简化webpack配置，提供中间件与build过程",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir ."
   },
   "author": "MarzK",
   "license": "ISC",
@@ -22,7 +23,15 @@
     "webpack-md5-hash": "0.0.5",
     "webpack-merge": "^4.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-stage-2": "^6.24.1"
+  },
+  "engines": {
+    "node": ">= 6.0"
+  },
+  "bin": "./cli/cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marzk/force-scripts.git"

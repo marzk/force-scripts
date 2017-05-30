@@ -74,6 +74,7 @@ const prodConfig = {
 const {
   configs,
   publicPath,
+  libConfig = {},
 } = forceConfig;
 
 const entry = configs.reduce((acc, config, index) => {
@@ -92,6 +93,6 @@ const relyConfig = {
 };
 
 module.exports = [
-  merge(baseConfig, devConfig, relyConfig),
-  merge(baseConfig, prodConfig, relyConfig),
+  merge(baseConfig, devConfig, relyConfig, libConfig),
+  merge(baseConfig, prodConfig, relyConfig, libConfig),
 ];
