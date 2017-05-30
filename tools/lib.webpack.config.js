@@ -71,11 +71,10 @@ const prodConfig = {
   ],
 };
 
-const {
-  configs,
-  publicPath,
-  libConfig = {},
-} = forceConfig;
+const configs = forceConfig.configs,
+  publicPath = forceConfig.publicPath;
+
+const libConfig = forceConfig.libConfig === undefined ? forceConfig.libConfig : {};
 
 const entry = configs.reduce((acc, config, index) => {
   if (config.libEntry) {
@@ -86,9 +85,9 @@ const entry = configs.reduce((acc, config, index) => {
 }, {});
 
 const relyConfig = {
-  entry,
+  entry: entry,
   output: {
-    publicPath,
+    publicPath: publicPath,
   },
 };
 

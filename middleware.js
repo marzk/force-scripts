@@ -7,5 +7,5 @@ module.exports = middleware(webpack(webpackConfig, {
   stats: {
     colors: true,
     chunks: false
-  },
+  }
 }));

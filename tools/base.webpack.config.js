@@ -1,13 +1,14 @@
-var webpack = require('webpack');
-var glob = require('glob');
-var path = require('path');
-var fs = require('fs');
-var merge = require('webpack-merge');
+const webpack = require('webpack');
+const glob = require('glob');
+const path = require('path');
+const fs = require('fs');
+const merge = require('webpack-merge');
 const CopyPlugin = require('copy-webpack-plugin');
+const omit = require('lodash/omit');
 
-var ROOT = process.cwd();
-var devConfig = require('./dev.webpack.config');
-var prodConfig = require('./prod.webpack.config');
+const ROOT = process.cwd();
+const devConfig = require('./dev.webpack.config');
+const prodConfig = require('./prod.webpack.config');
 const isProd = process.env.NODE_ENV === 'production';
 
 const forceConfig = require('../load-config')();
@@ -38,17 +39,22 @@ const baseConfig = {
   ],
 };
 
-let {
-  configs,
-  publicPath,
-} = forceConfig;
+let configs = forceConfig.configs;
+const publicPath = forceConfig.publicPath;
+
 configs = [].concat(configs);
 
 module.exports = configs.map((config, index) => {
-  const {
-    src, dest, entryRules, entryCb, libEntry,
-    ...restConfig
-  } = config;
+  const src = config.src,
+    dest = config.dest,
+    entryRules = config.entryRules,
+    entryCb = config.entryCb,
+    libEntry = config.libEntry;
+
+  const restConfig = omit(config, [
+    'src', 'dest', 'entryRules', 'entryCb', 'libEntry'
+  ]);
+
   const entryList = handleRule(entryRules, config)
 
   let libConfig = {};
@@ -87,7 +93,7 @@ module.exports = configs.map((config, index) => {
       return acc;
     }, {}),
     output: {
-      publicPath,
+      publicPath: publicPath,
       path: dest,
     },
   }, baseConfig, isProd ? prodConfig : devConfig, libConfig, restConfig);
