@@ -82,13 +82,18 @@ module.exports = configs.map((config, index) => {
     };
   }
 
+  const name = `force-scripts${index}`;
 
   return merge({
+    name: name,
     entry: entryList.reduce((acc, entry) => {
       const entryObj = path.parse(path.relative(path.relative(ROOT, src), entry));
       const name = path.join(entryObj.dir, entryObj.name);
       entry = entryCb ? entryCb(name, entry) : entry;
       acc[name] = [].concat(entry);
+      if (!isProd) {
+        acc[name].unshift(`webpack-hot-middleware/client?reload&name=${name}&timeout=4000`);
+      }
 
       return acc;
     }, {}),

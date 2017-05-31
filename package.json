@@ -1,8 +1,7 @@
 {
   "name": "force-scripts",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "简化webpack配置，提供中间件与build过程",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir ."
@@ -11,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "case-sensitive-paths-webpack-plugin": "^2.0.0",
-    "commander": "^2.9.0",
     "copy-webpack-plugin": "^4.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "force-scripts-middleware": "0.0.1",
@@ -29,9 +27,9 @@
     "/load-config.js",
     "/tools/",
     "/middleware.js",
-    "/cli/"
+    "/bin/"
   ],
-  "bin": "./cli/cli.js",
+  "bin": "./bin/force-scripts.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marzk/force-scripts.git"
