@@ -4,12 +4,17 @@ const path = require('path');
 const fs = require('fs');
 const merge = require('webpack-merge');
 const CopyPlugin = require('copy-webpack-plugin');
-const omit = require('lodash/omit');
+const lodash = require('lodash')
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 const ROOT = process.cwd();
 const devConfig = require('./dev.webpack.config');
 const prodConfig = require('./prod.webpack.config');
 const isProd = process.env.NODE_ENV === 'production';
+const ChunkStaticPlugin = require('../ChunkStaticPlugin');
+
+const manifest = {};
+const chunkStaticManifest = {};
 
 const forceConfig = require('../load-config')();
 
@@ -36,6 +41,9 @@ const baseConfig = {
         IS_BROWSER: true,
       },
     }),
+    new ChunkStaticPlugin({
+      cache: chunkStaticManifest,
+    })
   ],
 };
 
@@ -51,7 +59,7 @@ module.exports = configs.map((config, index) => {
     entryCb = config.entryCb,
     libEntry = config.libEntry;
 
-  const restConfig = omit(config, [
+  const restConfig = lodash.omit(config, [
     'src', 'dest', 'entryRules', 'entryCb', 'libEntry'
   ]);
 
@@ -62,7 +70,9 @@ module.exports = configs.map((config, index) => {
     let commonLibName;
     let commonLib = `commonLib${index}`;
     if (isProd) {
-      commonLibName = require(path.join(ROOT, 'build/commonlib', 'manifest.json'))[`commonlib/${commonLib}.js`].replace('commonlib/', '');
+      const libManifest = require(path.join(ROOT, 'build/commonlib', 'manifest.json'));
+      lodash.defaults(manifest, libManifest);
+      commonLibName = libManifest[`commonlib/${commonLib}.js`].replace('commonlib/', '');
     } else {
       commonLibName = `${commonLib}.dev.js`;
     }
@@ -101,7 +111,13 @@ module.exports = configs.map((config, index) => {
       publicPath: publicPath,
       path: dest,
     },
-  }, baseConfig, isProd ? prodConfig : devConfig, libConfig, restConfig);
+  }, baseConfig, isProd ? prodConfig : devConfig, libConfig, {
+    plugins: [
+      new ManifestPlugin({
+        cache: manifest,
+      }),
+    ],
+  }, restConfig);
 });
 
 

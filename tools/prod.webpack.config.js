@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const Md5Hash = require('webpack-md5-hash');
 
 module.exports = {
@@ -11,7 +10,10 @@ module.exports = {
     loaders: [
       {
         test: /\.s?css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?-autoprefixer&importLoaders=1!postcss-loader'),
+        loader: ExtractTextPlugin.extract(
+          'style-loader',
+          'css-loader?-autoprefixer&importLoaders=1!postcss-loader'
+        ),
         exclude: /node_modules/,
       },
       {
@@ -28,7 +30,6 @@ module.exports = {
     new ExtractTextPlugin('[name].[contenthash:8].css', {
       allChunks: true,
     }),
-    new Md5Hash(),
-    new ManifestPlugin()
+    new Md5Hash()
   ],
 };

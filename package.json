@@ -12,14 +12,16 @@
     "case-sensitive-paths-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^4.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
-    "force-scripts-middleware": "0.0.1",
+    "force-scripts-middleware": "^0.0.4",
     "glob": "^7.1.2",
+    "koa-compose": "^2.5.1",
     "lodash": "^4.17.4",
     "webpack": "^1.15.0",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-md5-hash": "0.0.5",
     "webpack-merge": "^4.1.0"
   },
+  "main": "middleware.js",
   "engines": {
     "node": ">= 6.0"
   },
@@ -27,7 +29,8 @@
     "/load-config.js",
     "/tools/",
     "/middleware.js",
-    "/bin/"
+    "/bin/",
+    "ChunkStaticPlugin.js"
   ],
   "bin": "./bin/force-scripts.js",
   "repository": {
@@ -37,5 +40,9 @@
   "bugs": {
     "url": "https://github.com/marzk/force-scripts/issues"
   },
-  "homepage": "https://github.com/marzk/force-scripts#readme"
+  "homepage": "https://github.com/marzk/force-scripts#readme",
+  "devDependencies": {
+    "debug": "^2.6.8",
+    "koa": "^1.4.0"
+  }
 }
