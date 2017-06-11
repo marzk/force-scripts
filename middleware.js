@@ -4,7 +4,7 @@ const path = require('path');
 const ChunkStaticPlugin = require('./ChunkStaticPlugin');
 const ROOT = process.cwd();
 const debug = require('debug')('forceScripts');
-const compose = require('koa-compose');
+const compose = require('composition');
 const forceConfig = require('./load-config')();
 
 const webpackConfig = require('./tools/base.webpack.config');
@@ -20,7 +20,6 @@ function forceScripts(opts = {}) {
   if (!opts.disable) {
     compiler = webpack(webpackConfig);
 
-    console.log(forceConfig);
     opts.publicPath = opts.publicPath ? opts.publicPath : forceConfig.publicPath;
 
     const staticMiddleware = middleware(compiler, Object.assign({
@@ -39,8 +38,9 @@ function forceScripts(opts = {}) {
   debug('manifest: ', manifest);
 
   const m = compose(middlewares);
-  console.log(m.constructor.name);
-  return m;
+  return function* (next) {
+    yield m.call(this, next);
+  };
 
   function* initMethod(next) {
     this.getStaticFromEntry = getStaticFromEntry;
