@@ -1,6 +1,6 @@
 # force-scripts
 
-取force.config.js，若为数组则生成中间件、目标文件和manifest.json。
+取`force.config.js`，若为数组则生成中间件、目标文件和manifest.json。
 
 ## Instruction
 
