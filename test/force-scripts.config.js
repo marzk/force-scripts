@@ -7,12 +7,8 @@ module.exports = {
       src: '.',
       dest: 'static',
       entryRules: [
-        ['app/*.js', path => path.indexOf('node_modules') === -1],
+        ['app/*.js', files => files.filter(file => file.indexOf('node_modules') === -1)],
       ],
-      entryCb(key, entry) {
-        console.log(key, entry);
-        return entry;
-      },
       libEntry: 'lib.js',
     },
   ],

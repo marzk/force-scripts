@@ -139,7 +139,7 @@ function handleRule(rules, config) {
       case '[object Regex]':
         return acc.filter(p => rule.test(p));
       case '[object Function]':
-        return acc.filter(rule);
+        return rule(acc);
       case '[object Array]':
         return acc.concat(handleRule(rule, config));
       default:

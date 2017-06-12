@@ -1,8 +1,8 @@
 {
   "app/index": {
     "js": [
-      "//s0.meituan.net/bs/$%7Bbuildservice.repo%7D/@/static/build/commonlib/commonLib0.14c5afff.min.js",
-      "//s0.meituan.net/bs/$%7Bbuildservice.repo%7D/@/static/app/index.d41d8cd9.js"
+      "/__static/build/commonlib/commonLib0.14c5afff.min.js",
+      "/__static/app/index.d41d8cd9.js"
     ],
     "css": []
   }

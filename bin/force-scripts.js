@@ -54,10 +54,10 @@ function handleErrorsAndWarnings(stats) {
   let json;
   if (stats.hasErrors()) {
     json = stats.toJson();
-    console.error(stats.errors);
+    console.error('errors', stats.errors);
   }
   if (stats.hasWarnings()) {
     json = json ? json : stats.toJson();
-    console.warn(stats.warnings);
+    console.warn('warnings', stats.warnings);
   }
 }
