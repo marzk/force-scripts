@@ -28,7 +28,7 @@ force-scripts build
 }
 ```
 
-## getResourceByEntry
+## getStaticFromEntry 
 
 ```
 {

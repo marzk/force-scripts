@@ -36,7 +36,6 @@ function prebuild() {
 function build() {
   process.env.NODE_ENV = 'production';
 
-  console.log(webpack(require('../tools/base.webpack.config')));
   webpack(require('../tools/base.webpack.config'), function (err, stats) {
     if (err) throw err;
 

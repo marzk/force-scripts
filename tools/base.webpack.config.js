@@ -6,6 +6,7 @@ const merge = require('webpack-merge');
 const CopyPlugin = require('copy-webpack-plugin');
 const lodash = require('lodash')
 const ManifestPlugin = require('webpack-manifest-plugin');
+const url = require('url');
 
 const ROOT = process.cwd();
 const devConfig = require('./dev.webpack.config');
@@ -41,9 +42,6 @@ const baseConfig = {
         IS_BROWSER: true,
       },
     }),
-    new ChunkStaticPlugin({
-      cache: chunkStaticManifest,
-    })
   ],
 };
 
@@ -66,8 +64,8 @@ module.exports = configs.map((config, index) => {
   const entryList = handleRule(entryRules, config)
 
   let libConfig = {};
+  let commonLibName;
   if (libEntry) {
-    let commonLibName;
     let commonLib = `commonLib${index}`;
     if (isProd) {
       const libManifest = require(path.join(ROOT, 'build/commonlib', 'manifest.json'));
@@ -116,6 +114,15 @@ module.exports = configs.map((config, index) => {
       new ManifestPlugin({
         cache: manifest,
       }),
+      new ChunkStaticPlugin({
+        cache: chunkStaticManifest,
+        cb: function (chunk) {
+          if (commonLibName) {
+            chunk.js.unshift(url.resolve(publicPath, path.join('build/commonlib', commonLibName)));
+          }
+          return chunk;
+        }
+      })
     ],
   }, restConfig);
 });

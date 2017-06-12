@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/__static/";
+/******/ 	__webpack_require__.p = "//s0.meituan.net/bs/${buildservice.repo}/@/static/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);

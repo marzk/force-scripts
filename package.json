@@ -1,6 +1,6 @@
 {
   "name": "force-scripts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "简化webpack配置，提供中间件与build过程",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,7 @@
     "composition": "^2.3.0",
     "copy-webpack-plugin": "^4.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
-    "force-scripts-middleware": "^0.0.4",
+    "force-scripts-middleware": "^0.0.6",
     "glob": "^7.1.2",
     "lodash": "^4.17.4",
     "webpack": "^1.15.0",
