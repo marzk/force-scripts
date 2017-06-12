@@ -5,14 +5,12 @@
 ## Instruction
 
 ```
-
 // 服务端
 app.use(require('force-scripts/middleware'));
 
 // deploy
 // package.json scripts
 force-scripts build
-
 ```
 
 ## config
