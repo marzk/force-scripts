@@ -51,7 +51,7 @@ var commonLib0 =
 /* 1 */
 /***/ (function(module, exports) {
 
-	eval("\n\n//////////////////\n// WEBPACK FOOTER\n// ./lib.js\n// module id = 1\n// module chunks = 0\n//# sourceURL=webpack:///./lib.js?");
+	eval("window.a = 1;\n\n//////////////////\n// WEBPACK FOOTER\n// ./lib.js\n// module id = 1\n// module chunks = 0\n//# sourceURL=webpack:///./lib.js?");
 
 /***/ })
 /******/ ]);

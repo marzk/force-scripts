@@ -60,7 +60,10 @@ function forceScripts(opts = {}) {
   }
 
   function getStaticFromEntry(entry) {
-    return manifest[entry] || [];
+    return manifest[entry] || {
+      js: [],
+      css: [],
+    };
   }
 }
 

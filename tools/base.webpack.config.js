@@ -102,6 +102,9 @@ module.exports = configs.map((config, index) => {
       if (!isProd) {
         acc[name].unshift(`webpack-hot-middleware/client?reload&name=${name}&timeout=4000`);
       }
+      if (libEntry) {
+        acc[name].unshift(path.resolve(src, libEntry));
+      }
 
       return acc;
     }, {}),
@@ -118,7 +121,7 @@ module.exports = configs.map((config, index) => {
         cache: chunkStaticManifest,
         cb: function (chunk) {
           if (commonLibName) {
-            chunk.js.unshift(url.resolve(publicPath, path.join('build/commonlib', commonLibName)));
+            chunk.js.unshift(url.resolve(publicPath, path.join('build/', commonLibName)));
           }
           return chunk;
         }

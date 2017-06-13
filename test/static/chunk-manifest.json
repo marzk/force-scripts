@@ -1,7 +1,7 @@
 {
   "app/index": {
     "js": [
-      "/__static/build/commonlib/commonLib0.14c5afff.min.js",
+      "/__static/build/commonLib0.3d7aca3f.min.js",
       "/__static/app/index.d41d8cd9.js"
     ],
     "css": []
