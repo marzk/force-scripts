@@ -14,7 +14,7 @@ module.exports = {
         loader:'style-loader!css-loader?-autoprefixer&importLoaders=1!postcss-loader',
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
         loader: 'url-loader',
         query: {
           name: 'assets/[path][name].[ext]?[hash]',
