@@ -1,9 +1,0 @@
-{
-  "app/index": {
-    "js": [
-      "/__static/build/commonLib0.3d7aca3f.min.js",
-      "/__static/app/index.d41d8cd9.js"
-    ],
-    "css": []
-  }
-}

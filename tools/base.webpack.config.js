@@ -7,6 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const lodash = require('lodash')
 const ManifestPlugin = require('webpack-manifest-plugin');
 const url = require('url');
+const debug = require('debug')('forceScripts');
 
 const ROOT = process.cwd();
 const devConfig = require('./dev.webpack.config');
@@ -55,10 +56,12 @@ module.exports = configs.map((config, index) => {
     dest = config.dest,
     entryRules = config.entryRules,
     entryCb = config.entryCb,
+    configCb = config.configCb,
+    disableLoaders = config.disableLoaders,
     libEntry = config.libEntry;
 
   const restConfig = lodash.omit(config, [
-    'src', 'dest', 'entryRules', 'entryCb', 'libEntry'
+    'src', 'dest', 'entryRules', 'entryCb', 'libEntry', 'configCb', 'disableLoaders'
   ]);
 
   const entryList = handleRule(entryRules, config)
@@ -92,7 +95,7 @@ module.exports = configs.map((config, index) => {
 
   const name = `force-scripts${index}`;
 
-  return merge({
+  const beforeCustomConfig = merge({
     name: name,
     entry: entryList.reduce((acc, entry) => {
       const entryObj = path.parse(path.relative(path.relative(ROOT, src), entry));
@@ -127,7 +130,19 @@ module.exports = configs.map((config, index) => {
         }
       })
     ],
-  }, restConfig);
+  });
+
+  if (disableLoaders) {
+    beforeCustomConfig.module.loaders = [];
+    beforeCustomConfig.plugins.splice(beforeCustomConfig.plugins.findIndex(plugin => plugin.constructor.name === 'ExtractTextPlugin'), 1);
+  }
+
+  debug('beforeCustomConfig', beforeCustomConfig);
+
+
+  const mergedConfig = merge(beforeCustomConfig, restConfig);
+
+  return typeof configCb === 'function' ? configCb(mergedConfig) : mergedConfig;
 });
 
 
