@@ -21,5 +21,26 @@ module.exports = {
         })
       ],
     },
+    {
+      src: '.',
+      dest: 'static',
+      entryRules: './asset.js',
+      disableLoaders: true,
+      module: {
+        loaders: [
+          {
+            test: /\.(css|png|jpg)$/,
+            loader: 'file-loader',
+            include: [
+              path.join(__dirname, 'assets'),
+            ],
+            query: {
+              context: __dirname,
+              name:  '[path][name].[hash:8].[ext]',
+            },
+          }
+        ],
+      }
+    }
   ],
 };

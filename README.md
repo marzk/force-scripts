@@ -23,10 +23,12 @@ force-scripts build
   entryCb: function :: (name, entry) => entry,
   publicPath: string,
   libEntry: string,
-  babel: object,
+  disableLoaders: bool,
   ...rest
 }
 ```
+
+* `disableLoaders`用于去除默认配置自带的loader
 
 ### entryRules
 
