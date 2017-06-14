@@ -134,7 +134,10 @@ module.exports = configs.map((config, index) => {
 
   if (disableLoaders) {
     beforeCustomConfig.module.loaders = [];
-    beforeCustomConfig.plugins.splice(beforeCustomConfig.plugins.findIndex(plugin => plugin.constructor.name === 'ExtractTextPlugin'), 1);
+    const extractPluginIndex = beforeCustomConfig.plugins.findIndex(plugin => plugin.constructor.name === 'ExtractTextPlugin');
+    if (extractPluginIndex > -1) {
+      beforeCustomConfig.plugins.splice(extractPluginIndex, 1);
+    }
   }
 
   debug('beforeCustomConfig', beforeCustomConfig);
