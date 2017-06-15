@@ -143,7 +143,7 @@ module.exports = configs.map((config, index) => {
   debug('beforeCustomConfig', beforeCustomConfig);
 
 
-  const mergedConfig = merge(beforeCustomConfig, restConfig);
+  const mergedConfig = merge.smart(beforeCustomConfig, restConfig);
 
   return typeof configCb === 'function' ? configCb(mergedConfig) : mergedConfig;
 });
