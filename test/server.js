@@ -3,7 +3,9 @@ const middleware = require('../');
 
 const app = new Koa();
 
-app.use(middleware());
+app.use(middleware({
+  disable: true
+}));
 
 app.use(function* (next) {
   this.body = {

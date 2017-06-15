@@ -46,6 +46,8 @@ function forceScripts(opts = {}) {
       )
     );
     middlewares.unshift(staticMiddleware);
+  } else {
+    manifest = getManifest(require('fs'));
   }
 
   const m = compose(middlewares);

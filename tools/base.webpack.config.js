@@ -12,13 +12,13 @@ const debug = require('debug')('forceScripts');
 const ROOT = process.cwd();
 const devConfig = require('./dev.webpack.config');
 const prodConfig = require('./prod.webpack.config');
-const isProd = process.env.NODE_ENV === 'production';
 const ChunkStaticPlugin = require('../ChunkStaticPlugin');
 
 const manifest = {};
 const chunkStaticManifest = {};
 
 const forceConfig = require('../load-config')();
+const isProd = forceConfig.isProd;
 
 const baseConfig = {
   context: ROOT,

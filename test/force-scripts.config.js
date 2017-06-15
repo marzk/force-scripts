@@ -3,6 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   publicPath: '/__static/',
+  isProd: true,
   configs: [
     {
       src: '.',
