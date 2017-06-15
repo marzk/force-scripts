@@ -103,7 +103,7 @@ module.exports = configs.map((config, index) => {
       entry = entryCb ? entryCb(name, entry) : entry;
       acc[name] = [].concat(entry);
       if (!isProd) {
-        acc[name].unshift(`webpack-hot-middleware/client?reload&name=${name}`);
+        acc[name].unshift(`webpack-hot-middleware/client?reload&name=${name}&timeoout=6000`);
       }
       if (libEntry) {
         acc[name].unshift(path.resolve(src, libEntry));
