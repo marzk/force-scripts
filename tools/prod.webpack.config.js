@@ -14,7 +14,6 @@ module.exports = {
           'style-loader',
           'css-loader?-autoprefixer&importLoaders=1!postcss-loader'
         ),
-        exclude: /node_modules/,
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|woff|woff2)$/,
