@@ -96,7 +96,7 @@ module.exports = configs.map((config, index) => {
   const forceName = `force-scripts${index}`;
 
   const beforeCustomConfig = merge({
-    name: name,
+    name: forceName,
     entry: entryList.reduce((acc, entry) => {
       const entryObj = path.parse(path.relative(path.relative(ROOT, src), entry));
       const name = path.join(entryObj.dir, entryObj.name);
