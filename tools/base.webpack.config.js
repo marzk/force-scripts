@@ -116,7 +116,7 @@ module.exports = configs.map((config, index) => {
     }, {}),
     output: {
       publicPath: publicPath,
-      path: path.relative(__dirname, dest),
+      path: path.resolve(ROOT, dest),
     },
   }, baseConfig, isProd ? prodConfig : devConfig, libConfig, {
     plugins: [
