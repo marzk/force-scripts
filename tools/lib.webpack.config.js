@@ -81,7 +81,6 @@ const libConfig = forceConfig.libConfig === undefined ? forceConfig.libConfig : 
 const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   const name = getConfigNameFromLibEntry(libEntry);
 
-  console.log(acc, name);
   if (!acc[name]) {
     acc[name] = [libEntry];
   }
