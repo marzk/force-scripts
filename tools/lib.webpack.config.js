@@ -4,6 +4,8 @@ const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const progressHandler = require('./progress-handler');
 const forceConfig = require('../load-config')();
+const getConfigNameFromLibEntry = require('../utils/getConfigNameFromLibEntry');
+const entryMap = getConfigNameFromLibEntry.map;
 
 const ROOT = process.cwd();
 
@@ -76,13 +78,25 @@ const configs = forceConfig.configs,
 
 const libConfig = forceConfig.libConfig === undefined ? forceConfig.libConfig : {};
 
-const entry = configs.reduce((acc, config, index) => {
-  if (config.libEntry) {
-    acc[`commonLib${index}`] = [path.resolve(config.src, config.libEntry)];
+const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
+  const name = getConfigNameFromLibEntry(libEntry);
+
+  console.log(acc, name);
+  if (!acc[name]) {
+    acc[name] = [libEntry];
   }
 
   return acc;
+
 }, {});
+
+// const entry = configs.reduce((acc, config, index) => {
+//   if (config.libEntry) {
+//     acc[`commonLib${index}`] = [path.resolve(config.src, config.libEntry)];
+//   }
+// 
+//   return acc;
+// }, {});
 
 const relyConfig = {
   entry: entry,

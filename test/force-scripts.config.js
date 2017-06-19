@@ -3,9 +3,10 @@ const webpack = require('webpack');
 
 module.exports = {
   publicPath: '/__static/',
-  isProd: true,
+  isProd: process.env.NODE_ENV === 'production',
   configs: [
     {
+      name: 'turbo',
       src: '.',
       dest: 'static',
       entryRules: [
@@ -24,10 +25,12 @@ module.exports = {
       ],
     },
     {
+      name: 'mobile',
       src: '.',
       dest: 'static',
       entryRules: './asset.js',
       disableLoaders: true,
+      libEntry: 'lib.js',
       module: {
         loaders: [
           {

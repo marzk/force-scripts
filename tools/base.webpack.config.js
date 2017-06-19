@@ -13,6 +13,7 @@ const ROOT = process.cwd();
 const devConfig = require('./dev.webpack.config');
 const prodConfig = require('./prod.webpack.config');
 const ChunkStaticPlugin = require('../ChunkStaticPlugin');
+const getNameFromLibEntry = require('../utils/getConfigNameFromLibEntry');
 
 const manifest = {};
 const chunkStaticManifest = {};
@@ -52,7 +53,8 @@ const publicPath = forceConfig.publicPath;
 configs = [].concat(configs);
 
 module.exports = configs.map((config, index) => {
-  const src = config.src,
+  const name = config.name,
+    src = config.src,
     dest = config.dest,
     entryRules = config.entryRules,
     entryCb = config.entryCb,
@@ -61,7 +63,7 @@ module.exports = configs.map((config, index) => {
     libEntry = config.libEntry;
 
   const restConfig = lodash.omit(config, [
-    'src', 'dest', 'entryRules', 'entryCb', 'libEntry', 'configCb', 'disableLoaders'
+    'name', 'src', 'dest', 'entryRules', 'entryCb', 'libEntry', 'configCb', 'disableLoaders'
   ]);
 
   const entryList = handleRule(entryRules, config)
@@ -69,7 +71,8 @@ module.exports = configs.map((config, index) => {
   let libConfig = {};
   let commonLibName;
   if (libEntry) {
-    let commonLib = `commonLib${index}`;
+    let relativeLibEntry = path.resolve(src, libEntry);
+    let commonLib = getNameFromLibEntry(relativeLibEntry);
     if (isProd) {
       const libManifest = require(path.join(ROOT, 'build/commonlib', 'manifest.json'));
       lodash.defaults(manifest, libManifest);
@@ -93,7 +96,7 @@ module.exports = configs.map((config, index) => {
     };
   }
 
-  const forceName = `force-scripts${index}`;
+  const forceName = name || `force-scripts${index}`;
 
   const beforeCustomConfig = merge({
     name: forceName,
@@ -113,7 +116,7 @@ module.exports = configs.map((config, index) => {
     }, {}),
     output: {
       publicPath: publicPath,
-      path: dest,
+      path: path.relative(__dirname, dest),
     },
   }, baseConfig, isProd ? prodConfig : devConfig, libConfig, {
     plugins: [

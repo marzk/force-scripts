@@ -18,7 +18,7 @@ function forceScripts(opts = {}) {
   let compiler;
   let manifest;
 
-  if (!opts.disable) {
+  if (!forceConfig.isProd) {
     compiler = webpack(webpackConfig);
 
     compiler.plugin('done', stats => {
