@@ -24,8 +24,15 @@ ChunkStaticPlugin.prototype.apply = function(compiler) {
       const chunkFiles = chunk.files.map(file =>
         url.resolve(publicPath || '', file)
       );
-      const js = getFiles(chunk, file => url.resolve(publicPath || '', file));
-      const css = chunkFiles.filter(file => /\.css($|\?)/.test(file));
+      const files = getFiles(
+        chunk,
+        files =>
+          [].concat(files).map(file => url.resolve(publicPath || '', file)),
+        files =>
+          files.filter((file, index) => index === 0 || /\.css($|\?)/.test(file))
+      );
+      const js = files.filter(file => /\.js($|\?)/.test(file));
+      const css = files.filter(file => /\.css($|\?)/.test(file));
 
       cache[chunk.name] = cb({
         js: [].concat(js),
@@ -50,17 +57,18 @@ ChunkStaticPlugin.prototype.apply = function(compiler) {
 
 module.exports = ChunkStaticPlugin['default'] = ChunkStaticPlugin;
 
-function getFiles(chunk, visit) {
+function getFiles(chunk, visit, filesFilter) {
   if (chunk.files.length === 0) return [];
+  filesFilter = filesFilter || (files => files[0]);
 
-  const file = visit(chunk.files[0]);
+  const file = visit(filesFilter(chunk.files));
   let files = [];
   if (chunk.parents && chunk.parents.length) {
     chunk.parents.forEach(chunk => {
-      files = files.concat(getFiles(chunk, visit));
+      files = files.concat(getFiles(chunk, visit, filesFilter));
     });
   }
-  files.push(file);
+  files = files.concat(file);
 
   return files;
 }
