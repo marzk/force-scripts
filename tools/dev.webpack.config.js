@@ -8,18 +8,24 @@ module.exports = {
     filename: '[name].js',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.s?css$/,
-        loader:'style-loader!css-loader?-autoprefixer&importLoaders=1!postcss-loader',
+        use: [
+          'style-loader',
+          'css-loader?-autoprefixer&importLoaders=1',
+          'postcss-loader'
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
-        loader: 'url-loader',
-        query: {
-          name: 'assets/[path][name].[ext]?[hash]',
-          limit: 10000,
-        },
+        use: [{
+          loader: 'url-loader',
+          options: {
+            name: 'assets/[path][name].[ext]?[hash]',
+            limit: 10000,
+          },
+        }],
       },
     ],
   },
@@ -27,7 +33,6 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin(progressHandler),
     new CaseSensitivePlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
 };

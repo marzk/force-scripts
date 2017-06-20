@@ -2,7 +2,6 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const progressHandler = require('./progress-handler');
 const forceConfig = require('../load-config')();
 const getConfigNameFromLibEntry = require('../utils/getConfigNameFromLibEntry');
 const entryMap = getConfigNameFromLibEntry.map;
@@ -12,21 +11,19 @@ const ROOT = process.cwd();
 const baseConfig = {
   context: ROOT,
   output: {
-    path: 'build/commonlib',
+    path: path.resolve(ROOT, 'build/commonlib'),
     library: '[name]',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
+        use: ['babel-loader'],
         exclude: /node_modules/,
       },
     ],
   },
   plugins: [
-    new webpack.ProgressPlugin(progressHandler),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
   ],
 };
@@ -57,6 +54,9 @@ const prodConfig = {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

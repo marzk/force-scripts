@@ -24,20 +24,19 @@ const isProd = forceConfig.isProd;
 const baseConfig = {
   context: ROOT,
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader?cacheDirectory',
+        use: ['babel-loader?cacheDirectory'],
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -136,7 +135,7 @@ module.exports = configs.map((config, index) => {
   });
 
   if (disableLoaders) {
-    beforeCustomConfig.module.loaders = [];
+    beforeCustomConfig.module.rules = [];
     const extractPluginIndex = beforeCustomConfig.plugins.findIndex(plugin => plugin.constructor.name === 'ExtractTextPlugin');
     if (extractPluginIndex > -1) {
       beforeCustomConfig.plugins.splice(extractPluginIndex, 1);
