@@ -23,7 +23,7 @@ switch (command) {
 
 function prebuild() {
   const configPath = require.resolve('../tools/lib.webpack.config');
-  execSync('`npm bin`/webpack --verbose --progress --bail --profile --config ' + configPath, {
+  execSync('`npm bin`/webpack --progress --bail --profile --config ' + configPath, {
     stdio: [0, 1, 2]
   });
 }
@@ -32,7 +32,7 @@ function build() {
   process.env.NODE_ENV = 'production';
 
   const configPath = require.resolve('../tools/base.webpack.config');
-  execSync('`npm bin`/webpack --verbose --progress --bail --profile --config ' + configPath, {
+  execSync('`npm bin`/webpack --progress --bail --profile --config ' + configPath, {
     stdio: [0, 1, 2]
   });
 }

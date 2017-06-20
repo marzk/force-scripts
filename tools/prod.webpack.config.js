@@ -7,7 +7,7 @@ module.exports = {
     filename: '[name].[chunkhash:8].js',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.s?css$/,
         use: ExtractTextPlugin.extract({

@@ -23,18 +23,6 @@ const isProd = forceConfig.isProd;
 
 const baseConfig = {
   context: ROOT,
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        use: ['babel-loader?cacheDirectory'],
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
   plugins: [
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.DefinePlugin({
