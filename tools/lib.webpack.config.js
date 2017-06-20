@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const merge = require('webpack-merge').smart;
 const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -17,8 +17,8 @@ const baseConfig = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        use: ['babel-loader'],
+        test: /\.js$/,
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
     ],
@@ -76,7 +76,7 @@ const prodConfig = {
 const configs = forceConfig.configs,
   publicPath = forceConfig.publicPath;
 
-const libConfig = forceConfig.libConfig === undefined ? forceConfig.libConfig : {};
+const libConfig = forceConfig.libConfig ? forceConfig.libConfig : {};
 
 const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   const name = getConfigNameFromLibEntry(libEntry);
@@ -88,14 +88,6 @@ const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   return acc;
 
 }, {});
-
-// const entry = configs.reduce((acc, config, index) => {
-//   if (config.libEntry) {
-//     acc[`commonLib${index}`] = [path.resolve(config.src, config.libEntry)];
-//   }
-// 
-//   return acc;
-// }, {});
 
 const relyConfig = {
   entry: entry,
