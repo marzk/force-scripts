@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
-const webpack = require('webpack');
 const fs = require('fs');
+const execSync = require('child_process').execSync;
+const path = require('path');
 
 const command = process.argv[2];
+const args = [].slice.call(process.argv, 3);
 
 switch (command) {
   case 'prebuild':
@@ -20,44 +22,20 @@ switch (command) {
 }
 
 function prebuild() {
-  webpack(require('../tools/lib.webpack.config'), function (err, stats) {
-    if (err) throw err;
-
-    handleErrorsAndWarnings(stats);
-    console.log(stats.toString({
-      colors: true,
-      chunks: false,
-    }));
-
-    console.log('prebuild done');
-  });
+  const configPath = require.resolve('../tools/lib.webpack.config');
+  
+  execConfig(configPath);
 }
 
 function build() {
   process.env.NODE_ENV = 'production';
 
-  webpack(require('../tools/base.webpack.config'), function (err, stats) {
-    if (err) throw err;
-
-    handleErrorsAndWarnings(stats);
-    console.log(stats.toString({
-      colors: true,
-      chunks: false,
-    }));
-
-    console.log('build done');
-  });
+  const configPath = require.resolve('../tools/base.webpack.config');
+  execConfig(configPath);
 }
 
-
-function handleErrorsAndWarnings(stats) {
-  let json;
-  if (stats.hasErrors()) {
-    json = stats.toJson();
-    console.error('errors', stats.errors);
-  }
-  if (stats.hasWarnings()) {
-    json = json ? json : stats.toJson();
-    console.warn('warnings', stats.warnings);
-  }
+function execConfig(configPath) {
+  execSync('`npm bin`/webpack ' + args.concat('--bail', '--config', configPath).join(' '), {
+    stdio: [0, 1, 2]
+  });
 }

@@ -1,6 +1,6 @@
 {
   "name": "force-scripts",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "简化webpack配置，提供中间件与build过程",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,6 @@
   "author": "MarzK",
   "license": "ISC",
   "dependencies": {
-    "babel-loader": "^6.4.1",
     "case-sensitive-paths-webpack-plugin": "^2.0.0",
     "composition": "^2.3.0",
     "copy-webpack-plugin": "^4.0.1",

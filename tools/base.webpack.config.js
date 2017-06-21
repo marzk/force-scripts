@@ -23,15 +23,6 @@ const isProd = forceConfig.isProd;
 
 const baseConfig = {
   context: ROOT,
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'babel-loader?cacheDirectory',
-        exclude: /node_modules/,
-      },
-    ],
-  },
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },

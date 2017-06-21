@@ -2,7 +2,6 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const progressHandler = require('./progress-handler');
 const forceConfig = require('../load-config')();
 const getConfigNameFromLibEntry = require('../utils/getConfigNameFromLibEntry');
 const entryMap = getConfigNameFromLibEntry.map;
@@ -12,20 +11,19 @@ const ROOT = process.cwd();
 const baseConfig = {
   context: ROOT,
   output: {
-    path: 'build/commonlib',
+    path: path.resolve(ROOT, 'build/commonlib'),
     library: '[name]',
   },
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        loader: 'babel-loader',
+        test: /\.js$/,
+        loader: require.resolve('./passthrough-loader'),
         exclude: /node_modules/,
       },
     ],
   },
   plugins: [
-    new webpack.ProgressPlugin(progressHandler),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
   ],
@@ -59,8 +57,8 @@ const prodConfig = {
       'process.env.NODE_ENV': '"production"'
     }),
     new webpack.optimize.UglifyJsPlugin({
+      ie8: true,
       compress: {
-        screw_ie8: true,
         warnings: false,
       },
       output: {
@@ -76,7 +74,7 @@ const prodConfig = {
 const configs = forceConfig.configs,
   publicPath = forceConfig.publicPath;
 
-const libConfig = forceConfig.libConfig === undefined ? forceConfig.libConfig : {};
+const libConfig = forceConfig.libConfig ? forceConfig.libConfig : {};
 
 const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   const name = getConfigNameFromLibEntry(libEntry);
@@ -88,14 +86,6 @@ const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   return acc;
 
 }, {});
-
-// const entry = configs.reduce((acc, config, index) => {
-//   if (config.libEntry) {
-//     acc[`commonLib${index}`] = [path.resolve(config.src, config.libEntry)];
-//   }
-// 
-//   return acc;
-// }, {});
 
 const relyConfig = {
   entry: entry,
