@@ -40,7 +40,6 @@ const baseConfig = {
 
 let configs = forceConfig.configs;
 const publicPath = forceConfig.publicPath;
-const forceBaseConfig = forceConfig.baseConfig ? forceConfig.baseConfig : {};
 
 configs = [].concat(configs);
 
@@ -138,7 +137,7 @@ module.exports = configs.map((config, index) => {
   debug('beforeCustomConfig', beforeCustomConfig);
 
 
-  const mergedConfig = merge.smart(beforeCustomConfig, forceBaseConfig, restConfig);
+  const mergedConfig = merge.smart(beforeCustomConfig, restConfig);
 
   return typeof configCb === 'function' ? configCb(mergedConfig) : mergedConfig;
 });

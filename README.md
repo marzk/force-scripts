@@ -13,6 +13,18 @@ app.use(require('force-scripts/middleware'));
 force-scripts build
 ```
 
+## forceConfig
+
+```
+{
+  publicPath: string,
+  baseConfig: object,
+  libConfig: object,
+  isProd: bool,
+  configs: [config]
+}
+```
+
 ## config
 
 ```
@@ -21,7 +33,6 @@ force-scripts build
   dest: string,
   entryRules: glob | string | regex | function | [],
   entryCb: function :: (name, entry) => entry,
-  publicPath: string,
   libEntry: string,
   disableLoaders: bool,
   ...rest

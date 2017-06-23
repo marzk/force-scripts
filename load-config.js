@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const merge = require('webpack-merge');
 
 const ROOT = process.cwd();
 
@@ -10,4 +11,10 @@ if (!fs.existsSync(configPath)) {
   process.exit(1);
 }
 
-module.exports = () => require(configPath);
+const forceConfig = require(configPath);
+
+if (typeof forceConfig.baseConfig === 'object') {
+  forceConfig.configs = forceConfig.configs.map(config => merge(forceConfig.baseConfig, config));
+}
+
+module.exports = () => forceConfig;

@@ -4,11 +4,13 @@ const webpack = require('webpack');
 module.exports = {
   publicPath: '/__static/',
   isProd: process.env.NODE_ENV === 'production',
+  baseConfig: {
+    src: '.',
+    dest: 'static',
+  },
   configs: [
     {
       name: 'turbo',
-      src: '.',
-      dest: 'static',
       entryRules: [
         ['app/*.js', files => files.filter(file => file.indexOf('node_modules') === -1)],
       ],
@@ -26,8 +28,6 @@ module.exports = {
     },
     {
       name: 'mobile',
-      src: '.',
-      dest: 'static',
       entryRules: './asset.js',
       disableLoaders: true,
       libEntry: 'lib.js',
