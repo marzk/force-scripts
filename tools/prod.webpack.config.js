@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const Md5Hash = require('webpack-md5-hash');
 
 module.exports = {
   output: {
@@ -42,6 +41,5 @@ module.exports = {
       filename: '[name].[contenthash:8].css',
       allChunks: true,
     }),
-    new Md5Hash(),
   ],
 };
