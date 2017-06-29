@@ -1,6 +1,6 @@
 {
   "name": "force-scripts",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "简化webpack配置，提供中间件与build过程",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +21,6 @@
     "postcss-loader": "^2.0.5",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.8",
-    "webpack-chunk-hash": "^0.4.0",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-merge": "^4.1.0"
   },

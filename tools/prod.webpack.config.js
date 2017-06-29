@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ChunkHash = require('webpack-chunk-hash');
 
 module.exports = {
   output: {
@@ -30,6 +29,5 @@ module.exports = {
     new ExtractTextPlugin('[name].[contenthash:8].css', {
       allChunks: true,
     }),
-    new ChunkHash(),
   ],
 };
