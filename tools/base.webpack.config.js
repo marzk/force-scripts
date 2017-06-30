@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const glob = require('glob');
 const path = require('path');
-const fs = require('fs');
 const merge = require('webpack-merge');
 const CopyPlugin = require('copy-webpack-plugin');
 const lodash = require('lodash');
@@ -15,8 +14,8 @@ const prodConfig = require('./prod.webpack.config');
 const ChunkStaticPlugin = require('../ChunkStaticPlugin');
 const getNameFromLibEntry = require('../utils/getConfigNameFromLibEntry');
 
-const manifest = {};
-const chunkStaticManifest = {};
+const manifest = require('../manifest-cache').file;
+const chunkStaticManifest = require('../manifest-cache').chunk;
 
 const forceConfig = require('../load-config')();
 const isProd = forceConfig.isProd;
@@ -140,6 +139,7 @@ module.exports = configs.map((config, index) => {
       plugins: [
         new ManifestPlugin({
           cache: manifest,
+          publicPath: publicPath,
         }),
         new ChunkStaticPlugin({
           cache: chunkStaticManifest,
