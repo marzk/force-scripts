@@ -19,7 +19,7 @@ module.exports = {
         test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
         query: {
-          name: 'assets/[hash:8].[ext]',
+          name: '[path][name].[hash:8].[ext]',
           limit: 10000,
         },
       },

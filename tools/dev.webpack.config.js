@@ -11,13 +11,14 @@ module.exports = {
     loaders: [
       {
         test: /\.s?css$/,
-        loader:'style-loader!css-loader?-autoprefixer&importLoaders=1!postcss-loader',
+        loader:
+          'style-loader!css-loader?-autoprefixer&importLoaders=1!postcss-loader',
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
         loader: 'url-loader',
         query: {
-          name: 'assets/[path][name].[ext]?[hash]',
+          name: '[path][name].[ext]',
           limit: 10000,
         },
       },
@@ -28,6 +29,6 @@ module.exports = {
     new webpack.ProgressPlugin(progressHandler),
     new CaseSensitivePlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
   ],
 };
