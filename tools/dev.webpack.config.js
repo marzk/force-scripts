@@ -14,14 +14,6 @@ module.exports = {
         loader:
           'style-loader!css-loader?-autoprefixer&importLoaders=1!postcss-loader',
       },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
-        loader: 'url-loader',
-        query: {
-          name: '[path][name].[ext]',
-          limit: 10000,
-        },
-      },
     ],
   },
   devtool: 'eval',

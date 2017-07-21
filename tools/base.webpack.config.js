@@ -131,6 +131,20 @@ module.exports = configs.map((config, index) => {
         publicPath: publicPath,
         path: path.resolve(ROOT, dest),
       },
+      module: {
+        loaders: [
+          {
+            test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
+            loader: 'url-loader',
+            query: {
+              context: path.join(ROOT, src),
+              name: `[path][name].${isProd ? '[hash:8].' : ''}[ext]`,
+              limit: 10000,
+              useRelativePath: true,
+            },
+          },
+        ],
+      },
     },
     baseConfig,
     isProd ? prodConfig : devConfig,
