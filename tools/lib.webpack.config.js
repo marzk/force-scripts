@@ -57,15 +57,15 @@ const prodConfig = {
       'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.UglifyJsPlugin({
-      ie8: true,
       compress: {
         warnings: false,
-        properties: false,
+        screw_ie8: false,
       },
       output: {
         comments: false,
-        keep_quoted_props: true,
+        screw_ie8: false,
       },
+      mangle: false,
     }),
     new ManifestPlugin({
       basePath: 'commonlib/',
