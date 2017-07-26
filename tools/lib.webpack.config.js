@@ -54,20 +54,22 @@ const prodConfig = {
       context: ROOT,
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.UglifyJsPlugin({
       ie8: true,
       compress: {
         warnings: false,
+        properties: false,
       },
       output: {
         comments: false,
+        keep_quoted_props: true,
       },
     }),
     new ManifestPlugin({
       basePath: 'commonlib/',
-    })
+    }),
   ],
 };
 
@@ -84,7 +86,6 @@ const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   }
 
   return acc;
-
 }, {});
 
 const relyConfig = {

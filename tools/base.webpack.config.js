@@ -76,7 +76,7 @@ module.exports = configs.map((config, index) => {
         'build/commonlib',
         'manifest.json'
       ));
-      lodash.defaults(manifest, libManifest);
+      // lodash.defaults(manifest, libManifest);
       commonLibName = libManifest[`commonlib/${commonLib}.js`].replace(
         'commonlib/',
         ''
