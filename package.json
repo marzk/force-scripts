@@ -1,6 +1,6 @@
 {
   "name": "force-scripts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "简化webpack配置，提供中间件与build过程",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

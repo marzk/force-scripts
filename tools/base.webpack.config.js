@@ -140,7 +140,6 @@ module.exports = configs.map((config, index) => {
               context: path.join(ROOT, src),
               name: `[path][name].${isProd ? '[hash:8].' : ''}[ext]`,
               limit: 10000,
-              useRelativePath: true,
             },
           },
         ],
