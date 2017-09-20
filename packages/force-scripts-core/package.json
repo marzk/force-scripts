@@ -1,0 +1,16 @@
+{
+  "name": "force-scripts-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "marzk",
+  "license": "ISC",
+  "dependencies": {
+    "@types/glob": "^5.0.32",
+    "@types/node": "^8.0.24",
+    "@types/webpack": "^3.0.10"
+  }
+}
