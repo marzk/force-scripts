@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-const webpack = require('webpack');
 const fs = require('fs');
 const execSync = require('child_process').execSync;
 const path = require('path');
 
 const command = process.argv[2];
+const args = [].slice.call(process.argv, 3);
+const CWD = process.cwd();
 
 switch (command) {
   case 'prebuild':
@@ -23,16 +24,24 @@ switch (command) {
 
 function prebuild() {
   const configPath = require.resolve('../tools/lib.webpack.config');
-  execSync('`npm bin`/webpack --progress --bail --profile --config ' + configPath, {
-    stdio: [0, 1, 2]
-  });
+
+  execConfig(configPath);
 }
 
 function build() {
   process.env.NODE_ENV = 'production';
-
   const configPath = require.resolve('../tools/base.webpack.config');
-  execSync('`npm bin`/webpack --progress --bail --profile --config ' + configPath, {
-    stdio: [0, 1, 2]
-  });
+
+  execConfig(configPath);
+}
+
+function execConfig(configPath) {
+  execSync(
+    '`npm bin`/webpack ' +
+      args.concat('--bail', '--config', configPath).join(' '),
+    {
+      cwd: CWD,
+      stdio: [0, 1, 2],
+    }
+  );
 }

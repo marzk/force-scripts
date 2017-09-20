@@ -14,18 +14,8 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader?-autoprefixer&importLoaders=1',
-          'postcss-loader'
-        ]
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            name: 'assets/[path][name].[ext]?[hash]',
-            limit: 10000,
-          },
-        }],
+          'postcss-loader',
+        ],
       },
     ],
   },
@@ -33,6 +23,6 @@ module.exports = {
   plugins: [
     new webpack.ProgressPlugin(progressHandler),
     new CaseSensitivePlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };

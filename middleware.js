@@ -6,28 +6,23 @@ const ROOT = process.cwd();
 const debug = require('debug')('forceScripts');
 const compose = require('composition');
 const forceConfig = require('./load-config')();
+const fs = require('./fs');
 
 const webpackConfig = require('./tools/base.webpack.config');
-let manifestPath;
+const manifest = require('./manifest');
 
 module.exports = forceScripts['default'] = forceScripts;
+module.exports.getStaticFromEntry = manifest.getStaticFromEntry;
+module.exports.getUrlFromFile = manifest.getUrlFromFile;
 
 function forceScripts(opts = {}) {
   const middlewares = [initMethod];
 
   let compiler;
-  let manifest;
 
   if (!forceConfig.isProd) {
     compiler = webpack(webpackConfig);
-
-    compiler.plugin('done', stats => {
-      manifest = getManifest(
-        (typeof staticMiddleware !== 'undefined' && staticMiddleware.fs) ||
-          require('fs')
-      );
-      debug('manifest: ', manifest);
-    });
+    compiler.outputFileSystem = fs;
 
     opts.publicPath = opts.publicPath
       ? opts.publicPath
@@ -56,41 +51,9 @@ function forceScripts(opts = {}) {
   };
 
   function* initMethod(next) {
-    this.getStaticFromEntry = getStaticFromEntry;
+    this.getStaticFromEntry = manifest.getStaticFromEntry;
+    this.getUrlFromFile = manifest.getUrlFromFile;
 
     return yield next;
   }
-
-  function getStaticFromEntry(entry) {
-    return manifest[entry] || {
-      js: [],
-      css: [],
-    };
-  }
-}
-
-function getManifestPath(config) {
-  const outputPath = config.output.path;
-  const manifestFileName = config.plugins.find(
-    plugin => plugin instanceof ChunkStaticPlugin
-  ).fileName;
-
-  return path.resolve(outputPath, manifestFileName);
-}
-
-function getManifest(fs) {
-  manifestPath = getManifestPath(
-    Array.isArray(webpackConfig)
-      ? webpackConfig[webpackConfig.length - 1]
-      : webpackConfig
-  );
-
-  if (fs.existsSync(manifestPath)) {
-    try {
-      return JSON.parse(fs.readFileSync(manifestPath));
-    } catch (e) {
-      return {};
-    }
-  }
-  return {};
 }

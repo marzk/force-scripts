@@ -18,14 +18,12 @@ const baseConfig = {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: require.resolve('./passthrough-loader'),
         exclude: /node_modules/,
       },
     ],
   },
-  plugins: [
-    new webpack.optimize.AggressiveMergingPlugin(),
-  ],
+  plugins: [new webpack.optimize.AggressiveMergingPlugin()],
 };
 
 const devConfig = {
@@ -53,7 +51,7 @@ const prodConfig = {
       context: ROOT,
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -66,7 +64,7 @@ const prodConfig = {
     }),
     new ManifestPlugin({
       basePath: 'commonlib/',
-    })
+    }),
   ],
 };
 
@@ -83,7 +81,6 @@ const entry = Object.keys(entryMap).reduce((acc, libEntry) => {
   }
 
   return acc;
-
 }, {});
 
 const relyConfig = {

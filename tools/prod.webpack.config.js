@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   output: {
     filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].js',
   },
   module: {
     rules: [
@@ -21,18 +22,6 @@ module.exports = {
             'postcss-loader',
           ],
         }),
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|svg|eot|ttf|otf|woff|woff2)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: 'assets/[hash:8].[ext]',
-              limit: 10000,
-            },
-          },
-        ],
       },
     ],
   },
