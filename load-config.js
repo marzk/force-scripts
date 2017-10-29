@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const merge = require('merge');
+const merge = require('webpack-merge');
 
 const ROOT = process.cwd();
 
