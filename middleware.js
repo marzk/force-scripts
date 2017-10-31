@@ -8,8 +8,8 @@ const compose = require('composition');
 const forceConfig = require('./load-config')();
 const fs = require('./fs');
 
-const webpackConfig = require('./tools/base.webpack.config');
 const manifest = require('./manifest');
+const genCompiler = require('./compiler');
 
 module.exports = forceScripts['default'] = forceScripts;
 module.exports.getStaticFromEntry = manifest.getStaticFromEntry;
@@ -20,9 +20,9 @@ function forceScripts(opts = {}) {
 
   let compiler;
 
+  // 生产环境无须compile，若外置devServer无须compile
   if (!forceConfig.isProd) {
-    compiler = webpack(webpackConfig);
-    compiler.outputFileSystem = fs;
+    compiler = genCompiler();
 
     opts.publicPath = opts.publicPath
       ? opts.publicPath
@@ -46,9 +46,13 @@ function forceScripts(opts = {}) {
   }
 
   const m = compose(middlewares);
-  return function*(next) {
+
+  const middlewareForce = function*(next) {
     yield m.call(this, next);
   };
+
+  middlewareForce.compiler = compiler;
+  return middlewareForce;
 
   function* initMethod(next) {
     this.getStaticFromEntry = manifest.getStaticFromEntry;

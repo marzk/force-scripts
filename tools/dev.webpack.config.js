@@ -1,6 +1,17 @@
 const webpack = require('webpack');
 const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin');
 const progressHandler = require('./progress-handler');
+const forceConfig = require('./load-config');
+
+const plugins = [new CaseSensitivePlugin()];
+
+if (forceConfig.hot) {
+  plugins.push(new webpack.HotModuleReplacementPlugin());
+}
+
+if (forceConfig.progress) {
+  plugins.unshift(new webpack.ProgressPlugin(progressHandler));
+}
 
 module.exports = {
   output: {
@@ -20,9 +31,5 @@ module.exports = {
     ],
   },
   devtool: 'eval',
-  plugins: [
-    new webpack.ProgressPlugin(progressHandler),
-    new CaseSensitivePlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: plugins,
 };

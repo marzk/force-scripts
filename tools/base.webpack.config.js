@@ -115,7 +115,7 @@ module.exports = configs.map((config, index) => {
         const name = path.join(entryObj.dir, entryObj.name);
         entry = entryCb ? entryCb(name, entry) : entry;
         acc[name] = [].concat(entry);
-        if (!isProd) {
+        if (forceConfig.hot) {
           acc[name].unshift(
             `webpack-hot-middleware/client?reload&name=${forceName}&timeout=6000`
           );

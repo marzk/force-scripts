@@ -19,4 +19,7 @@ if (typeof forceConfig.baseConfig === 'object') {
   );
 }
 
-module.exports = () => require(configPath);
+// 是否开启内置热替换
+forceConfig.hot = 'hot' in forceConfig ? forceConfig.hot : !forceConfig.isProd;
+
+module.exports = () => forceConfig;
