@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin');
 const progressHandler = require('./progress-handler');
-const forceConfig = require('./load-config');
+const forceConfig = require('../load-config');
 
 const plugins = [new CaseSensitivePlugin()];
 
