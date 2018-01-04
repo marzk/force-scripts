@@ -28,8 +28,7 @@ ChunkStaticPlugin.prototype.apply = function(compiler) {
         chunk,
         files =>
           [].concat(files).map(file => url.resolve(publicPath || '', file)),
-        files =>
-          files.filter((file, index) => index === 0 || /\.css($|\?)/.test(file))
+        files => files.filter((file, index) => /\.(?:j|cs)s($|\?)/.test(file))
       );
       const js = files.filter(file => /\.js($|\?)/.test(file));
       const css = files.filter(file => /\.css($|\?)/.test(file));
