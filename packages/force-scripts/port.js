@@ -2,9 +2,8 @@ const { EntryRules } = require('./entry-rules');
 const path = require('path');
 
 class Port {
-  constructor(config, { workdir }) {
-    this.config = config;
-    this.workdir = workdir;
+  constructor(forceConfig) {
+    this.forceConfig = forceConfig;
   }
 
   getFileList(config) {
@@ -18,6 +17,20 @@ class Port {
   stripExt(filename) {
     const pathObj = path.parse(filename);
     return path.join(pathObj.dir, pathObj.name);
+  }
+
+  pickReturnPickAndRest(obj, paths) {
+    const restObj = { ...obj };
+    const pickObj = paths.reduce((pickObj, pickKey) => {
+      if (restObj.hasOwnProperty(pickKey)) {
+        pickObj[pickKey] = restObj[pickKey];
+        Reflect.deleteProperty(restObj, pickKey);
+      }
+
+      return pickObj;
+    }, {});
+
+    return [pickObj, restObj];
   }
 }
 
