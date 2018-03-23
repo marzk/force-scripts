@@ -1,12 +1,13 @@
 {
-  "name": "force-scripts-port-webpack",
+  "name": "force-scripts-port-gulp",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^3.0.0"
+    "gulp": "^3.9.1"
   },
   "dependencies": {
-    "yargs": "^11.0.0"
+    "through2": "^2.0.3",
+    "vinyl": "^0.4.0"
   }
 }
