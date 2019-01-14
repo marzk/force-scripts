@@ -1,0 +1,8 @@
+{
+  "name": "passthrough-loader",
+  "version": "0.0.1",
+  "description": "Passthrough",
+  "main": "index.js",
+  "author": "MarzK",
+  "license": "MIT"
+}

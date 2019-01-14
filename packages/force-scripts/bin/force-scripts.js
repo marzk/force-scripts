@@ -1,5 +1,18 @@
 #!/usr/bin/env node
 
+// build [port]
+//  default - run all port
+//  webpack - run webpack
+//  gulp - run gulp
+// dev
+// watch [port]
+
+require('yargs')
+  .usage('force-scripts [command]')
+  .command('build')
+  .command('dev')
+  .command('watch').argv;
+
 const fs = require('fs');
 const execSync = require('child_process').execSync;
 const path = require('path');
